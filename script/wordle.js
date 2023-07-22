@@ -21,14 +21,14 @@ class Player {
     this.#guesses = [];
   }
 
-  //improve guess
+  //improve name
   addGuess(guess) {
     this.#guesses.push(guess);
   }
 
   getRecentGuess() {
-    const [lastGuess] = this.#guesses.slice(-1);
-    return lastGuess;
+    const [recentGuess] = this.#guesses.slice(-1);
+    return recentGuess;
   }
 }
 
@@ -40,8 +40,6 @@ const main = () => {
   const secretWord = "TIGER";
   let noOfGuesses = 0;
 
-  setUpGuessBox(guessBox);
-
   const player = new Player();
 
   submitBtn.onclick = () => {
@@ -52,6 +50,7 @@ const main = () => {
 
     const isCorrectGuess = recentGuess === secretWord;
     const isGameOver = isCorrectGuess || noOfGuesses === 2;
+    if (noOfGuesses === 2) submitBtn.disabled = true;
 
     displayResult(resultBox, isCorrectGuess, isGameOver);
   };
