@@ -14,23 +14,7 @@ const setUpGuessBox = (guessBox) => {
   };
 };
 
-class Player {
-  #guesses;
-
-  constructor() {
-    this.#guesses = [];
-  }
-
-  //improve name
-  addGuess(guess) {
-    this.#guesses.push(guess);
-  }
-
-  getRecentGuess() {
-    const [recentGuess] = this.#guesses.slice(-1);
-    return recentGuess;
-  }
-}
+class Game {}
 
 const main = () => {
   const submitBtn = document.querySelector("#submit-btn");
@@ -40,13 +24,13 @@ const main = () => {
   const secretWord = "TIGER";
   let noOfGuesses = 0;
 
-  const player = new Player();
+  const guesses = [];
 
   submitBtn.onclick = () => {
     noOfGuesses++;
     const userGuess = guessBox.value;
-    player.addGuess(userGuess);
-    const recentGuess = player.getRecentGuess();
+    guesses.push(userGuess);
+    const [recentGuess] = guesses.slice(-1);
 
     const isCorrectGuess = recentGuess === secretWord;
     const isGameOver = isCorrectGuess || noOfGuesses === 2;
