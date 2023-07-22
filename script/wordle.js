@@ -1,5 +1,9 @@
-const displayResult = (resultBox, result) => {
-  resultBox.innerText = `${result} Guess`;
+const displayResult = (resultBox, isCorrectGuess, isGameOver) => {
+  let displayMsg = isCorrectGuess ? "Correct Guess" : "Wrong Guess";
+
+  if (isGameOver) displayMsg += "\nGame Over";
+
+  resultBox.innerText = displayMsg;
 };
 
 const setUpGuessBox = (guessBox) => {
@@ -16,24 +20,15 @@ class Player {
   constructor() {
     this.#guesses = [];
   }
-}
 
-class View {
-  #resultBox;
-
-  constructor(resultBox) {
-    this.#resultBox = resultBox;
+  //improve guess
+  addGuess(guess) {
+    this.#guesses.push(guess);
   }
-}
 
-class GameController {
-  #player;
-  #view;
-  #secretWord;
-
-  constructor(player, view) {
-    this.#player = player;
-    this.#view = view;
+  getRecentGuess() {
+    const [lastGuess] = this.#guesses.slice(-1);
+    return lastGuess;
   }
 }
 
@@ -43,19 +38,22 @@ const main = () => {
   const resultBox = document.querySelector(".result");
 
   const secretWord = "TIGER";
+  let noOfGuesses = 0;
 
   setUpGuessBox(guessBox);
 
   const player = new Player();
-  const view = new View(resultBox);
-
-  const gameController = new GameController(player, view);
 
   submitBtn.onclick = () => {
+    noOfGuesses++;
     const userGuess = guessBox.value;
-    const result = userGuess === secretWord ? "Correct" : "Incorrect";
+    player.addGuess(userGuess);
+    const recentGuess = player.getRecentGuess();
 
-    displayResult(resultBox, result);
+    const isCorrectGuess = recentGuess === secretWord;
+    const isGameOver = isCorrectGuess || noOfGuesses === 2;
+
+    displayResult(resultBox, isCorrectGuess, isGameOver);
   };
 };
 
