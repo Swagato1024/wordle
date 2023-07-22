@@ -12,7 +12,7 @@ const setUpGuessBox = (guessBox) => {
 
 const main = () => {
   const submitBtn = document.querySelector("#submit-btn");
-  const guessBox = document.querySelector("#secret-word");
+  const guessBox = document.querySelector("#guess-box");
   const resultBox = document.querySelector(".result");
 
   const secretWord = "TIGER";
