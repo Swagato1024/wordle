@@ -1,11 +1,11 @@
-const showResult = (resultBox, result) => {
-  resultBox.innerText = result;
+const showResult = (result) => {
+  const resultBox = document.querySelector(".result");
+  resultBox.innerText = `${result} Guess`;
 };
 
 const main = () => {
   const submitBtn = document.querySelector("#submit-btn");
   const guessBox = document.querySelector("#secret-word");
-  const resultBox = document.querySelector(".result");
 
   const secretWord = "TIGER";
 
@@ -13,7 +13,7 @@ const main = () => {
     const userGuess = guessBox.value;
     const result = userGuess === secretWord ? "Correct" : "Incorrect";
 
-    showResult(resultBox, result);
+    showResult(result);
   };
 };
 
