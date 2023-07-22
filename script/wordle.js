@@ -14,29 +14,50 @@ const setUpGuessBox = (guessBox) => {
   };
 };
 
-class Game {}
+class Game {
+  #guesses;
+  #secretWord;
+
+  constructor(secretWord) {
+    this.#guesses = [];
+    this.#secretWord = secretWord;
+  }
+
+  addGuess(guess) {
+    this.#guesses.push(guess);
+  }
+
+  #findMatches([...letters]) {
+    let matches = [];
+
+    letters.forEach((letter) => {
+      if (this.#secretWord.includes(letter)) matches.push(letter);
+    });
+
+    return matches;
+  }
+
+  generateStat() {
+    return this.#guesses.map((guess) => this.#findMatches(guess));
+  }
+}
 
 const main = () => {
   const submitBtn = document.querySelector("#submit-btn");
   const guessBox = document.querySelector("#guess-box");
   const resultBox = document.querySelector(".result");
 
-  const secretWord = "TIGER";
-  let noOfGuesses = 0;
+  const secretWord = "tiger";
 
-  const guesses = [];
+  const game = new Game(secretWord);
+  const view = new View(resultBox);
 
   submitBtn.onclick = () => {
-    noOfGuesses++;
     const userGuess = guessBox.value;
-    guesses.push(userGuess);
-    const [recentGuess] = guesses.slice(-1);
-
-    const isCorrectGuess = recentGuess === secretWord;
-    const isGameOver = isCorrectGuess || noOfGuesses === 2;
-    if (noOfGuesses === 2) submitBtn.disabled = true;
-
-    displayResult(resultBox, isCorrectGuess, isGameOver);
+    game.addGuess(userGuess);
+    const stats = game.generateStat();
+    console.log(stats);
+    // view.render(stats);
   };
 };
 
