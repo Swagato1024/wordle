@@ -1,3 +1,7 @@
+class Word {
+
+}
+
 class Game {
   #guesses;
   #secretWord;
@@ -27,5 +31,9 @@ class Game {
 
   generateStats() {
     return this.#guesses.map((guess) => this.#statForWord(guess));
+  }
+
+  status() {
+    return [{guess, inCorrectSpot, inWrongSpot}];
   }
 }

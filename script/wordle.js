@@ -3,8 +3,8 @@ const main = () => {
   const guessBox = document.querySelector("#guess-box");
   const resultBox = document.querySelector(".result-container");
 
+  // const secretWord = new Word("tiger");
   const secretWord = "tiger";
-
   const game = new Game(secretWord);
   const view = new View(resultBox);
   let attempt = 0;
