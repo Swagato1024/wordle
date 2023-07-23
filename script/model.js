@@ -85,6 +85,9 @@ class Game {
       this.#isGameOver = true;
       this.#win = false;
     }
+
+    this.#attemptsLeft--;
+    console.log(this.#attemptsLeft);
   }
 
   status() {

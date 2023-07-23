@@ -7,19 +7,11 @@ const main = () => {
   const guesses = new GuessHandler(secretWord);
   const game = new Game(guesses);
   const view = new View(resultBox);
-  let attempt = 0;
 
-  submitBtn.onclick = () => {
-    if (attempt === 2) return;
-
-    const userGuess = guessBox.value;
-    attempt++;
-
-    game.onGuess(new Word(userGuess));
-    const stats = game.status();
-
-    view.display(stats);
-  };
+  const inputController = new InputController(guessBox, submitBtn);
+  const gameController = new GameController(game, inputController, view);
+  
+  gameController.start();
 };
 
 window.onload = main;
