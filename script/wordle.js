@@ -1,97 +1,3 @@
-const displayResult = (resultBox, isCorrectGuess, isGameOver) => {
-  let displayMsg = isCorrectGuess ? "Correct Guess" : "Wrong Guess";
-
-  if (isGameOver) displayMsg += "\nGame Over";
-
-  resultBox.innerText = displayMsg;
-};
-
-const setUpGuessBox = (guessBox) => {
-  guessBox.oninput = () => {
-    if (guessBox.value.length === 5) {
-      guessBox.disabled = true;
-    }
-  };
-};
-
-class View {
-  #resultBox;
-
-  constructor(resultBox) {
-    this.#resultBox = resultBox;
-  }
-
-  #createLetter(stat) {
-    console.log(stat);
-
-    const { guess, inCorrectSpot, inWrongSpot } = stat;
-
-    const letter = document.createElement("div");
-    letter.innerText = guess;
-
-    letter.classList.add("tile");
-
-    if (inCorrectSpot) letter.classList.add("correct-guess");
-    else if (inWrongSpot) letter.classList.add("letter-present");
-    else letter.classList.add("absent");
-
-    return letter;
-  }
-
-  #createWord(stats) {
-    const letters = stats.map((stat) => this.#createLetter(stat));
-    const word = document.createElement("div");
-    word.classList.add("row");
-
-    word.append(...letters);
-    return word;
-  }
-
-  #removeChildren() {
-    Array.from(this.#resultBox.children).forEach((child) =>
-      this.#resultBox.removeChild(child)
-    );
-  }
-
-  render(stats) {
-    this.#removeChildren();
-    const words = stats.map((stat) => this.#createWord(stat));
-    this.#resultBox.append(...words);
-  }
-}
-
-class Game {
-  #guesses;
-  #secretWord;
-
-  constructor(secretWord) {
-    this.#guesses = [];
-    this.#secretWord = [...secretWord];
-  }
-
-  addGuess(guess) {
-    this.#guesses.push([...guess]);
-  }
-
-  #statForLetter(letter, index) {
-    const [guess, inCorrectSpot, inWrongSpot] = [letter, false, false];
-    const stat = { guess, inCorrectSpot, inWrongSpot };
-
-    if (guess === this.#secretWord[index]) stat.inCorrectSpot = true;
-    else if (this.#secretWord.includes(guess)) stat.inWrongSpot = true;
-
-    return stat;
-  }
-
-  #statForWord(letters) {
-    return letters.map((letter, index) => this.#statForLetter(letter, index));
-  }
-
-  generateStats() {
-    return this.#guesses.map((guess) => this.#statForWord(guess));
-  }
-}
-
 const main = () => {
   const submitBtn = document.querySelector("#submit-btn");
   const guessBox = document.querySelector("#guess-box");
@@ -101,9 +7,13 @@ const main = () => {
 
   const game = new Game(secretWord);
   const view = new View(resultBox);
+  let attempt = 0;
 
   submitBtn.onclick = () => {
+    if (attempt === 2) return;
+
     const userGuess = guessBox.value;
+    attempt++;
     game.addGuess(userGuess);
     const stats = game.generateStats();
 

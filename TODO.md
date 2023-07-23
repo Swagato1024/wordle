@@ -1,24 +1,18 @@
-I will have an entity Guess
-Guess will consists of
-guesses = [[]]
-secretWord = []
+goals:
 
-It can generate Stats on each guessed letter
-stat = {
-guess: 'l',
-inCorrectSpot: false,
-inWrongSpot: false,
-notInWord: true
-}
+make all letters to upper case
+style input box and submit box
 
-generateStat(guess) { //for each char
-const stat = [];
+maintain attempts
+allow 2 attemps only
 
-statFormat = guess.map((letter) => {
-return {
-guess: letter, inCorrectSpot: false, inWrongSpot: false, notInWord: false
-};
-    
-letters.
-}
-guesses.map(generateStat)
+think about model
+
+Guess
+guesses = ["fasd", "asfd"];
+noOfAttempts
+add
+getAttempts
+
+
+Wordle
