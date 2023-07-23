@@ -14,6 +14,14 @@ const setUpGuessBox = (guessBox) => {
   };
 };
 
+class View {
+  #resultBox;
+
+  constructor(resultBox) {
+    this.#resultBox = resultBox;
+  }
+}
+
 class Game {
   #guesses;
   #secretWord;
@@ -56,7 +64,6 @@ const main = () => {
     const userGuess = guessBox.value;
     game.addGuess(userGuess);
     const stats = game.generateStat();
-    console.log(stats);
     // view.render(stats);
   };
 };
