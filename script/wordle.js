@@ -22,17 +22,18 @@ class View {
   }
 
   #createLetter(stat) {
+    console.log(stat);
+
     const { guess, inCorrectSpot, inWrongSpot } = stat;
 
     const letter = document.createElement("div");
     letter.innerText = guess;
 
-    letter.classList.add("absent", "tile");
+    letter.classList.add("tile");
 
     if (inCorrectSpot) letter.classList.add("correct-guess");
     else if (inWrongSpot) letter.classList.add("letter-present");
-
-    console.log(letter);
+    else letter.classList.add("absent");
 
     return letter;
   }
