@@ -3,9 +3,9 @@ const main = () => {
   const guessBox = document.querySelector("#guess-box");
   const resultBox = document.querySelector(".result-container");
 
-  // const secretWord = new Word("tiger");
-  const secretWord = "tiger";
-  const game = new Game(secretWord);
+  const secretWord = new Word("tiger");
+  const guesses = new GuessHandler(secretWord);
+  const game = new Game(guesses);
   const view = new View(resultBox);
   let attempt = 0;
 
@@ -14,10 +14,11 @@ const main = () => {
 
     const userGuess = guessBox.value;
     attempt++;
-    game.addGuess(userGuess);
-    const stats = game.generateStats();
 
-    view.render(stats);
+    game.onGuess(new Word(userGuess));
+    const stats = game.status();
+
+    view.display(stats);
   };
 };
 

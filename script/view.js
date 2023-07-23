@@ -37,7 +37,24 @@ class View {
 
   render(stats) {
     this.#removeChildren();
-    const words = stats.map((stat) => this.#createWord(stat));
+    const words = stats.hints.map((stat) => this.#createWord(stat));
     this.#resultBox.append(...words);
+  }
+
+  #showNoOfCorrectLetters(hint) {
+    const div = document.createElement("div");
+    div.innerText = `correct Guess ${hint}`;
+    console.log(div);
+
+    return div;
+  }
+
+  display(stats) {
+    this.#removeChildren();
+    const correctGuesses = stats.hints.map((hint) =>
+      this.#showNoOfCorrectLetters(hint)
+    );
+
+    this.#resultBox.append(...correctGuesses);
   }
 }

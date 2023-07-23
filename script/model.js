@@ -1,39 +1,98 @@
 class Word {
+  #word;
 
+  constructor(letters) {
+    this.#word = letters;
+  }
+
+  isEqual(other) {
+    return this.#word === other.#word;
+  }
+
+  #generateFrequencyTable([...letters]) {
+    const frequencies = {};
+    letters.forEach(
+      (letter) => (frequencies[letter] = (frequencies[letter] || 0) + 1)
+    );
+
+    return frequencies;
+  }
+
+  compare(other) {
+    const frequencies1 = this.#generateFrequencyTable(this.#word);
+    const frequencies2 = this.#generateFrequencyTable(other.#word);
+
+    const matches = {};
+    const keys = Object.keys(frequencies1);
+
+    for (const key of keys) {
+      if (key in frequencies2) {
+        matches[key] = Math.min(frequencies1[key], frequencies2[key]);
+      }
+    }
+
+    return Object.keys(matches).length;
+  }
 }
 
-class Game {
+class GuessHandler {
   #guesses;
   #secretWord;
 
   constructor(secretWord) {
     this.#guesses = [];
-    this.#secretWord = [...secretWord];
+    this.#secretWord = secretWord;
   }
 
   addGuess(guess) {
-    this.#guesses.push([...guess]);
+    this.#guesses.push(guess);
   }
 
-  #statForLetter(letter, index) {
-    const [guess, inCorrectSpot, inWrongSpot] = [letter, false, false];
-    const stat = { guess, inCorrectSpot, inWrongSpot };
-
-    if (guess === this.#secretWord[index]) stat.inCorrectSpot = true;
-    else if (this.#secretWord.includes(guess)) stat.inWrongSpot = true;
-
-    return stat;
+  isCorrectGuess() {
+    const [recentGuess] = this.#guesses.slice(-1);
+    this.#secretWord.isEqual(recentGuess);
+    console.log("equal");
   }
 
-  #statForWord(letters) {
-    return letters.map((letter, index) => this.#statForLetter(letter, index));
+  generateHints() {
+    return this.#guesses.map((guess) => this.#secretWord.compare(guess));
+  }
+}
+
+class Game {
+  #guessChecker;
+  #isGameOver;
+  #attemptsLeft;
+  #win;
+
+  constructor(guessChecker, attempts) {
+    this.#guessChecker = guessChecker;
+    this.#attemptsLeft = attempts;
+    this.#isGameOver = false;
+    this.#win = false;
   }
 
-  generateStats() {
-    return this.#guesses.map((guess) => this.#statForWord(guess));
+  onGuess(guess) {
+    this.#guessChecker.addGuess(guess);
+
+    if (this.#guessChecker.isCorrectGuess()) {
+      this.#isGameOver = true;
+      this.#win = true;
+      return;
+    }
+
+    if (this.#attemptsLeft === 0) {
+      this.#isGameOver = true;
+      this.#win = false;
+    }
   }
 
   status() {
-    return [{guess, inCorrectSpot, inWrongSpot}];
+    return {
+      isGameOver: this.#isGameOver,
+      hints: this.#guessChecker.generateHints(),
+      win: this.#win,
+      attemptsLeft: this.#attemptsLeft,
+    };
   }
 }
