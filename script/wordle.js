@@ -20,6 +20,41 @@ class View {
   constructor(resultBox) {
     this.#resultBox = resultBox;
   }
+
+  #createLetter(stat) {
+    const { guess, inCorrectSpot, inWrongSpot } = stat;
+
+    const letter = document.createElement("span");
+    letter.innerText = guess;
+
+    if (inCorrectSpot) letter.style.color = "green";
+    else if (inWrongSpot) letter.style.color = "yellow";
+    else letter.style.color = "red";
+
+    console.log(letter);
+
+    return letter;
+  }
+
+  #createWord(stats) {
+    const letters = stats.map((stat) => this.#createLetter(stat));
+    const word = document.createElement("p");
+
+    word.append(...letters);
+    return word;
+  }
+
+  #removeChildren() {
+    Array.from(this.#resultBox.children).forEach((child) =>
+      this.#resultBox.removeChild(child)
+    );
+  }
+
+  render(stats) {
+    this.#removeChildren();
+    const words = stats.map((stat) => this.#createWord(stat));
+    this.#resultBox.append(...words);
+  }
 }
 
 class Game {
@@ -28,25 +63,30 @@ class Game {
 
   constructor(secretWord) {
     this.#guesses = [];
-    this.#secretWord = secretWord;
+    this.#secretWord = [...secretWord];
   }
 
   addGuess(guess) {
-    this.#guesses.push(guess);
+    this.#guesses.push([...guess]);
   }
 
-  #findMatches([...letters]) {
-    let matches = [];
+  #statForLetter(letter, index) {
+    const [guess, inCorrectSpot, inWrongSpot] = [letter, false, false];
 
-    letters.forEach((letter) => {
-      if (this.#secretWord.includes(letter)) matches.push(letter);
-    });
+    const stat = { guess, inCorrectSpot, inWrongSpot };
 
-    return matches;
+    if (guess === this.#secretWord[index]) stat.inCorrectSpot = true;
+    else if (this.#secretWord.includes(guess)) stat.inWrongSpot = true;
+
+    return stat;
   }
 
-  generateStat() {
-    return this.#guesses.map((guess) => this.#findMatches(guess));
+  #statForWord(letters) {
+    return letters.map((letter, index) => this.#statForLetter(letter, index));
+  }
+
+  generateStats() {
+    return this.#guesses.map((guess) => this.#statForWord(guess));
   }
 }
 
@@ -63,8 +103,9 @@ const main = () => {
   submitBtn.onclick = () => {
     const userGuess = guessBox.value;
     game.addGuess(userGuess);
-    const stats = game.generateStat();
-    // view.render(stats);
+    const stats = game.generateStats();
+
+    view.render(stats);
   };
 };
 
