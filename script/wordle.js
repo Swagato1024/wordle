@@ -24,12 +24,13 @@ class View {
   #createLetter(stat) {
     const { guess, inCorrectSpot, inWrongSpot } = stat;
 
-    const letter = document.createElement("span");
+    const letter = document.createElement("div");
     letter.innerText = guess;
 
-    if (inCorrectSpot) letter.style.color = "green";
-    else if (inWrongSpot) letter.style.color = "yellow";
-    else letter.style.color = "red";
+    letter.classList.add("absent", "tile");
+
+    if (inCorrectSpot) letter.classList.add("correct-guess");
+    else if (inWrongSpot) letter.classList.add("letter-present");
 
     console.log(letter);
 
@@ -38,7 +39,8 @@ class View {
 
   #createWord(stats) {
     const letters = stats.map((stat) => this.#createLetter(stat));
-    const word = document.createElement("p");
+    const word = document.createElement("div");
+    word.classList.add("row");
 
     word.append(...letters);
     return word;
@@ -72,7 +74,6 @@ class Game {
 
   #statForLetter(letter, index) {
     const [guess, inCorrectSpot, inWrongSpot] = [letter, false, false];
-
     const stat = { guess, inCorrectSpot, inWrongSpot };
 
     if (guess === this.#secretWord[index]) stat.inCorrectSpot = true;
@@ -93,7 +94,7 @@ class Game {
 const main = () => {
   const submitBtn = document.querySelector("#submit-btn");
   const guessBox = document.querySelector("#guess-box");
-  const resultBox = document.querySelector(".result");
+  const resultBox = document.querySelector(".result-container");
 
   const secretWord = "tiger";
 

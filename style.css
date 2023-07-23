@@ -15,3 +15,45 @@ body {
 #guess-box {
   height: 40px;
 }
+
+.letter-present {
+  background-color: #c9b458;
+  font-size: 1.5em;
+  color: whitesmoke;
+}
+
+.tile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.correct-guess {
+  background-color: #6aaa64;
+  font-size: 1.5em;
+  color: whitesmoke;
+}
+
+.absent {
+  background-color: #787c7e;
+  font-size: 1.5em;
+  color: whitesmoke;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.3em;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  margin: 1em auto;
+  border: 1px solid black;
+}
