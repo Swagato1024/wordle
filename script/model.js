@@ -9,17 +9,45 @@ class Word {
     return this.#word === other.#word;
   }
 
-  compare(other) {
-    const guessedLetters = new Set([...other.#word]);
-    const secretLetters = new Set([...this.#word]);
+  #generateFrequencyTable([...letters]) {
+    const frequencies = {};
+    letters.forEach(
+      (letter) => (frequencies[letter] = (frequencies[letter] || 0) + 1)
+    );
 
-    const matchedLetters = [...guessedLetters].filter((letter) =>
-      secretLetters.has(letter)
+    return frequencies;
+  }
+
+  #countMatches(letterCountsInSecret, letterCountsInGuessed) {
+    const distincLetters = Object.keys(letterCountsInGuessed);
+    const matches = {};
+
+    console.log(distincLetters);
+
+    distincLetters.forEach((letter) => {
+      if (letter in letterCountsInSecret) {
+        matches[letter] = Math.min(
+          letterCountsInSecret[letter],
+          letterCountsInGuessed[letter]
+        );
+      }
+    });
+
+    return Object.values(matches).reduce((total, count) => total + count, 0);
+  }
+
+  compare(other) {
+    const letterCountsInSecret = this.#generateFrequencyTable(this.#word);
+    const letterCountsInGuessed = this.#generateFrequencyTable(other.#word);
+
+    const noOfMatches = this.#countMatches(
+      letterCountsInSecret,
+      letterCountsInGuessed
     );
 
     return {
       guess: other.#word,
-      matches: matchedLetters.length,
+      matches: noOfMatches,
     };
   }
 }
