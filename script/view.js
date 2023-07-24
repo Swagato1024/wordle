@@ -53,9 +53,12 @@ class View {
     const winningMessage = "Correct Guess";
     const losingMessage = "Try again";
 
-    const gameOverMsg = win ? winningMessage : losingMessage;
+    const [gameOverMsg, msgColor] = win
+      ? [winningMessage, "green"]
+      : [losingMessage, "red"];
 
     const p = document.createElement("p");
+    p.style.color = msgColor;
     p.innerText = gameOverMsg;
 
     return p;

@@ -1,5 +1,7 @@
 * {
-  /* border: 1px solid black; */
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 body {
@@ -36,8 +38,11 @@ body {
 }
 
 #submit-btn {
-  height: 1.5em;
+  height: 2em;
   font-size: 1em;
+
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }
 
 .result-container {
@@ -46,9 +51,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1em;
 
   margin: 1em auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .letter-present {
