@@ -29,25 +29,33 @@ class GameController {
     this.#view = view;
   }
 
+  #onGuess(userGuess) {
+    const guess = new Word(userGuess);
+    this.#game.registerGuess(guess);
+    const stats = this.#game.status();
+
+    this.#view.render(stats);
+  }
+
+  #onGameOver() {
+    const score = this.#game.calculateScore();
+    const stats = this.#game.status();
+
+    const summary = {
+      score,
+      secretWord: this.#game.correctWord,
+      hasWon: stats.hasWon,
+    };
+
+    this.#view.displaySummary(summary);
+  }
+
   start() {
     this.#inputController.onSubmit((userGuess) => {
       if (this.#game.isGameOver) return;
+      this.#onGuess(userGuess);
 
-      const guess = new Word(userGuess);
-      this.#game.registerGuess(guess);
-      const stats = this.#game.status();
-      this.#view.render(stats);
-
-      if (this.#game.isGameOver) {
-        const score = this.#game.calculateScore();
-        const summary = {
-          score,
-          secretWord: this.#game.correctWord,
-          hasWon: stats.hasWon,
-        };
-
-        this.#view.displaySummary(summary);
-      }
+      if (this.#game.isGameOver) this.#onGameOver();
     });
   }
 }

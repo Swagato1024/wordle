@@ -10,8 +10,6 @@ const pickRandomWord = () => {
   ];
 
   const randomIndex = Math.floor(Math.random() * commonWords.length);
-  console.log(commonWords[randomIndex]);
-
   return new Word(commonWords[randomIndex]);
 };
 

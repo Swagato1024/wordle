@@ -13,21 +13,6 @@ class Word {
     return this.#word === other.#word;
   }
 
-  countMatches(other) {
-    const letters = [...this.#word];
-    let matches = 0;
-
-    [...other.#word].forEach((letter) => {
-      const index = letters.indexOf(letter);
-      if (index >= 0) {
-        letters.splice(index, 1);
-        matches++;
-      }
-    });
-
-    return matches;
-  }
-
   #compareLetter(letter, index) {
     const [isInCorrectSpot, isInWrongSpot] = [false, false];
     const stat = { letter, isInCorrectSpot, isInWrongSpot };
