@@ -31,7 +31,10 @@ class Word {
       }
     }
 
-    return Object.keys(matches).length;
+    return {
+      guess: other.#word,
+      matches: Object.keys(matches).length,
+    };
   }
 }
 
@@ -72,6 +75,10 @@ class Game {
     this.#win = false;
   }
 
+  get isGameOver() {
+    return this.#isGameOver;
+  }
+
   onGuess(guess) {
     this.#guessChecker.addGuess(guess);
 
@@ -81,13 +88,12 @@ class Game {
       return;
     }
 
-    if (this.#attemptsLeft === 0) {
+    if (this.#attemptsLeft <= 1) {
       this.#isGameOver = true;
       this.#win = false;
     }
 
     this.#attemptsLeft--;
-    console.log(this.#attemptsLeft);
   }
 
   status() {

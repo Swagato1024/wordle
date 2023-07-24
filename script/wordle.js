@@ -5,12 +5,12 @@ const main = () => {
 
   const secretWord = new Word("tiger");
   const guesses = new GuessHandler(secretWord);
-  const game = new Game(guesses);
+  const game = new Game(guesses, 2);
   const view = new View(resultBox);
 
   const inputController = new InputController(guessBox, submitBtn);
   const gameController = new GameController(game, inputController, view);
-  
+
   gameController.start();
 };
 

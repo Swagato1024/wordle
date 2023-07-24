@@ -35,6 +35,7 @@ class GameController {
       const guess = new Word(userGuess);
       this.#game.onGuess(guess);
       const stats = this.#game.status();
+
       this.#view.display(stats);
     });
   }
