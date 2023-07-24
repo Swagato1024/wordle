@@ -79,3 +79,8 @@ result[key] = Math.min(acc[key], accb[key]);
 }
 
 
+a = "abcad"
+b = "aaaa"
+
+
+
