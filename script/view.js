@@ -1,8 +1,10 @@
 class View {
   #resultBox;
+  #attemptsLeft;
 
-  constructor(resultBox) {
+  constructor(resultBox, attemptsLeft) {
     this.#resultBox = resultBox;
+    this.#attemptsLeft = attemptsLeft;
   }
 
   #createLetter(stat) {
@@ -38,10 +40,15 @@ class View {
   render(stats) {
     this.#removeChildren();
     const words = stats.hints.map((stat) => this.#createWord(stat));
+    this.#attemptsLeft.innerText = `Attempts left: ${stats.attemptsLeft}`;
+
     this.#resultBox.append(...words);
   }
 
   showScore(score) {
+    console.log(this.#attemptsLeft.innerText);
+
+    this.#attemptsLeft.innerText = "";
     const scoreElement = document.createElement("div");
     scoreElement.innerText = `Your Score: ${score}`;
 

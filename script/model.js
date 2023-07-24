@@ -45,7 +45,7 @@ class Word {
   }
 }
 
-class GuessHandler {
+class Guesses {
   #guesses;
   #secretWord;
 
@@ -69,13 +69,13 @@ class GuessHandler {
 }
 
 class Game {
-  #guessHandler;
+  #guesses;
   #isGameOver;
   #attemptsLeft;
   #hasWon;
 
   constructor(guessChecker, attempts) {
-    this.#guessHandler = guessChecker;
+    this.#guesses = guessChecker;
     this.#attemptsLeft = attempts;
     this.#isGameOver = false;
     this.#hasWon = false;
@@ -86,11 +86,11 @@ class Game {
   }
 
   registerGuess(guess) {
-    this.#guessHandler.addGuess(guess);
+    this.#guesses.addGuess(guess);
 
     this.#attemptsLeft--;
 
-    if (this.#guessHandler.isRecentGuessCorrect()) {
+    if (this.#guesses.isRecentGuessCorrect()) {
       console.log("correct guess");
 
       this.#isGameOver = true;
@@ -109,13 +109,13 @@ class Game {
   }
 
   calculateScore() {
-    return this.#hasLost() ? 0 : this.#attemptsLeft + 1 * 10;
+    return this.#hasLost() ? 0 : (this.#attemptsLeft + 1) * 10;
   }
 
   status() {
     return {
       isGameOver: this.#isGameOver,
-      hints: this.#guessHandler.generateHints(),
+      hints: this.#guesses.generateHints(),
       hasWon: this.#hasWon,
       attemptsLeft: this.#attemptsLeft,
     };

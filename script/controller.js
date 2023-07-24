@@ -31,7 +31,7 @@ class GameController {
 
   start() {
     this.#inputController.onSubmit((userGuess) => {
-      // if (this.#game.isGameOver) return;
+      if (this.#game.isGameOver) return;
 
       const guess = new Word(userGuess);
       this.#game.registerGuess(guess);
