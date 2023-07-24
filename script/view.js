@@ -1,10 +1,10 @@
 class View {
   #resultBox;
-  #attemptsLeft;
+  #summary;
 
-  constructor(resultBox, attemptsLeft) {
+  constructor(resultBox, summary) {
     this.#resultBox = resultBox;
-    this.#attemptsLeft = attemptsLeft;
+    this.#summary = summary;
   }
 
   #createLetter(stat) {
@@ -40,18 +40,25 @@ class View {
   render(stats) {
     this.#removeChildren();
     const words = stats.hints.map((stat) => this.#createWord(stat));
-    this.#attemptsLeft.innerText = `Attempts left: ${stats.attemptsLeft}`;
+    this.#summary.innerText = `Attempts left: ${stats.attemptsLeft}`;
 
     this.#resultBox.append(...words);
   }
 
-  showScore(score) {
-    console.log(this.#attemptsLeft.innerText);
+  #createGameOverMsg({ hasWon, secretWord }) {
+    const msg = hasWon ? "Congratulation!!" : `Secret word: ${secretWord}`;
+    const div = document.createElement("div");
+    div.innerText = msg;
 
-    this.#attemptsLeft.innerText = "";
+    return div;
+  }
+
+  displaySummary(summary) {
+    this.#summary.innerText = "";
+    const gameOverMsg = this.#createGameOverMsg(summary);
     const scoreElement = document.createElement("div");
-    scoreElement.innerText = `Your Score: ${score}`;
+    scoreElement.innerText = `Your Score: ${summary.score}`;
 
-    this.#resultBox.appendChild(scoreElement);
+    this.#summary.append(gameOverMsg, scoreElement);
   }
 }

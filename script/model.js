@@ -66,6 +66,10 @@ class Guesses {
   generateHints() {
     return this.#guesses.map((guess) => this.#secretWord.compare(guess));
   }
+
+  get secretWord() {
+    return this.#secretWord.value;
+  }
 }
 
 class Game {
@@ -102,6 +106,10 @@ class Game {
       this.#isGameOver = true;
       this.#hasWon = false;
     }
+  }
+
+  get correctWord() {
+    return this.#guesses.secretWord;
   }
 
   #hasLost() {

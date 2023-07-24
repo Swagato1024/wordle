@@ -10,6 +10,7 @@ const pickRandomWord = () => {
   ];
 
   const randomIndex = Math.floor(Math.random() * commonWords.length);
+  console.log(commonWords[randomIndex]);
 
   return new Word(commonWords[randomIndex]);
 };
@@ -23,9 +24,9 @@ const createInputController = () => {
 
 const createView = () => {
   const resultBox = document.querySelector(".result-container");
-  const attemptsContainer = document.querySelector("#attempt-left");
+  const summary = document.querySelector("#summary");
 
-  return new View(resultBox, attemptsContainer);
+  return new View(resultBox, summary);
 };
 
 const main = () => {

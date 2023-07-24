@@ -36,12 +36,17 @@ class GameController {
       const guess = new Word(userGuess);
       this.#game.registerGuess(guess);
       const stats = this.#game.status();
-
       this.#view.render(stats);
 
       if (this.#game.isGameOver) {
         const score = this.#game.calculateScore();
-        this.#view.showScore(score);
+        const summary = {
+          score,
+          secretWord: this.#game.correctWord,
+          hasWon: stats.hasWon,
+        };
+
+        this.#view.displaySummary(summary);
       }
     });
   }
