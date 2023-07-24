@@ -73,6 +73,7 @@ class View {
     this.#resultBox.append(...correctGuesses);
 
     if (stats.isGameOver) {
+      console.log(stats);
       const gameOverMsg = this.#createGameOverMsg(stats);
       this.#resultBox.append(gameOverMsg);
     }

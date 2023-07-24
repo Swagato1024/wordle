@@ -31,9 +31,14 @@ class Word {
       }
     }
 
+    const noOfMatches = Object.values(matches).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+
     return {
       guess: other.#word,
-      matches: Object.keys(matches).length,
+      matches: noOfMatches,
     };
   }
 }
@@ -53,8 +58,7 @@ class GuessHandler {
 
   isCorrectGuess() {
     const [recentGuess] = this.#guesses.slice(-1);
-    this.#secretWord.isEqual(recentGuess);
-    console.log("equal");
+    return this.#secretWord.isEqual(recentGuess);
   }
 
   generateHints() {
@@ -82,18 +86,18 @@ class Game {
   onGuess(guess) {
     this.#guessChecker.addGuess(guess);
 
+    this.#attemptsLeft--;
+
     if (this.#guessChecker.isCorrectGuess()) {
       this.#isGameOver = true;
       this.#win = true;
       return;
     }
 
-    if (this.#attemptsLeft <= 1) {
+    if (this.#attemptsLeft <= 0) {
       this.#isGameOver = true;
       this.#win = false;
     }
-
-    this.#attemptsLeft--;
   }
 
   status() {
