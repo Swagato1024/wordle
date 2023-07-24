@@ -48,13 +48,13 @@ class GuessHandler {
 }
 
 class Game {
-  #guessChecker;
+  #guessHandler;
   #isGameOver;
   #attemptsLeft;
   #win;
 
   constructor(guessChecker, attempts) {
-    this.#guessChecker = guessChecker;
+    this.#guessHandler = guessChecker;
     this.#attemptsLeft = attempts;
     this.#isGameOver = false;
     this.#win = false;
@@ -65,11 +65,11 @@ class Game {
   }
 
   registerGuess(guess) {
-    this.#guessChecker.addGuess(guess);
+    this.#guessHandler.addGuess(guess);
 
     this.#attemptsLeft--;
 
-    if (this.#guessChecker.isCorrectGuess()) {
+    if (this.#guessHandler.isCorrectGuess()) {
       this.#isGameOver = true;
       this.#win = true;
       return;
@@ -84,7 +84,7 @@ class Game {
   status() {
     return {
       isGameOver: this.#isGameOver,
-      hints: this.#guessChecker.generateHints(),
+      hints: this.#guessHandler.generateHints(),
       win: this.#win,
       attemptsLeft: this.#attemptsLeft,
     };

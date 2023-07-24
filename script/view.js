@@ -41,12 +41,18 @@ class View {
     this.#resultBox.append(...words);
   }
 
-  #showNoOfCorrectLetters(guess, matches) {
-    const div = document.createElement("div");
-    div.innerText = `Your Guess: ${guess} \n correct letter present: ${matches}`;
-    console.log(div);
+  #createHintBox(guess, matches) {
+    const guessContainer = document.createElement("div");
+    const matchesContainer = document.createElement("div");
+    const hintBox = document.createElement("div");
 
-    return div;
+    guessContainer.innerText = guess;
+    matchesContainer.innerText = matches;
+
+    hintBox.append(guessContainer, matchesContainer);
+    hintBox.classList.add("hint-box");
+
+    return hintBox;
   }
 
   #createGameOverMsg({ win }) {
@@ -66,8 +72,9 @@ class View {
 
   display(stats) {
     this.#removeChildren();
+
     const correctGuesses = stats.hints.map(({ guess, matches }) =>
-      this.#showNoOfCorrectLetters(guess, matches)
+      this.#createHintBox(guess, matches)
     );
 
     this.#resultBox.append(...correctGuesses);
@@ -75,6 +82,7 @@ class View {
     if (stats.isGameOver) {
       const gameOverMsg = this.#createGameOverMsg(stats);
       this.#resultBox.append(gameOverMsg);
+      return;
     }
   }
 }
