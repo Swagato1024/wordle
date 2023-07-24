@@ -40,4 +40,11 @@ class View {
     const words = stats.hints.map((stat) => this.#createWord(stat));
     this.#resultBox.append(...words);
   }
+
+  showScore(score) {
+    const scoreElement = document.createElement("div");
+    scoreElement.innerText = `Your Score: ${score}`;
+
+    this.#resultBox.appendChild(scoreElement);
+  }
 }

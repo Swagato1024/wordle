@@ -91,6 +91,8 @@ class Game {
     this.#attemptsLeft--;
 
     if (this.#guessHandler.isRecentGuessCorrect()) {
+      console.log("correct guess");
+
       this.#isGameOver = true;
       this.#hasWon = true;
       return;
@@ -100,6 +102,14 @@ class Game {
       this.#isGameOver = true;
       this.#hasWon = false;
     }
+  }
+
+  #hasLost() {
+    return this.#attemptsLeft === 0 && !this.#hasWon;
+  }
+
+  calculateScore() {
+    return this.#hasLost() ? 0 : this.#attemptsLeft + 1 * 10;
   }
 
   status() {

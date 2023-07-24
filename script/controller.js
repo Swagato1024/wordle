@@ -11,6 +11,7 @@ class InputController {
     this.#submitBtn.onclick = () => {
       const userGuess = this.#guessBox.value;
       this.#guessBox.value = "";
+      this.#guessBox.focus();
 
       verifyGuess(userGuess);
     };
@@ -30,13 +31,18 @@ class GameController {
 
   start() {
     this.#inputController.onSubmit((userGuess) => {
-      if (this.#game.isGameOver) return;
+      // if (this.#game.isGameOver) return;
 
       const guess = new Word(userGuess);
       this.#game.registerGuess(guess);
       const stats = this.#game.status();
 
       this.#view.render(stats);
+
+      if (this.#game.isGameOver) {
+        const score = this.#game.calculateScore();
+        this.#view.showScore(score);
+      }
     });
   }
 }

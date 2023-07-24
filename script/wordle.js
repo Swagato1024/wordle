@@ -5,7 +5,7 @@ const main = () => {
 
   const secretWord = new Word("rover");
   const guesses = new GuessHandler(secretWord);
-  const game = new Game(guesses, 2);
+  const game = new Game(guesses, 6);
   const view = new View(resultBox);
 
   const inputController = new InputController(guessBox, submitBtn);
