@@ -27,6 +27,22 @@ class Word {
 
     return matches;
   }
+
+  #compareLetter(letter, index) {
+    const [isInCorrectSpot, isInWrongSpot] = [false, false];
+    const stat = { letter, isInCorrectSpot, isInWrongSpot };
+
+    if (this.#word[index] === letter) stat.isInCorrectSpot = true;
+    else if (this.#word.includes(letter)) stat.isInWrongSpot = true;
+
+    return stat;
+  }
+
+  compare(other) {
+    return [...other.#word].map((letter, index) =>
+      this.#compareLetter(letter, index)
+    );
+  }
 }
 
 class GuessHandler {
@@ -48,15 +64,7 @@ class GuessHandler {
   }
 
   generateHints() {
-    return this.#guesses.map((guess) => {
-      console.log(guess.value);
-
-      const matches = this.#secretWord.countMatches(guess);
-      return {
-        guess: guess.value,
-        matches,
-      };
-    });
+    return this.#guesses.map((guess) => this.#secretWord.compare(guess));
   }
 }
 

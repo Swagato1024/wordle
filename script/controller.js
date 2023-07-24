@@ -36,7 +36,7 @@ class GameController {
       this.#game.registerGuess(guess);
       const stats = this.#game.status();
 
-      this.#view.display(stats);
+      this.#view.render(stats);
     });
   }
 }

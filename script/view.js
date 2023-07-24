@@ -6,18 +6,18 @@ class View {
   }
 
   #createLetter(stat) {
-    const { guess, inCorrectSpot, inWrongSpot } = stat;
+    const { letter, isInCorrectSpot, isInWrongSpot } = stat;
 
-    const letter = document.createElement("div");
-    letter.innerText = guess;
+    const letterElement = document.createElement("div");
+    letterElement.innerText = letter;
 
-    letter.classList.add("tile");
+    letterElement.classList.add("tile");
 
-    if (inCorrectSpot) letter.classList.add("correct-guess");
-    else if (inWrongSpot) letter.classList.add("letter-present");
-    else letter.classList.add("absent");
+    if (isInCorrectSpot) letterElement.classList.add("correct-guess");
+    else if (isInWrongSpot) letterElement.classList.add("letter-present");
+    else letterElement.classList.add("absent");
 
-    return letter;
+    return letterElement;
   }
 
   #createWord(stats) {
@@ -41,20 +41,6 @@ class View {
     this.#resultBox.append(...words);
   }
 
-  #createHintBox(guess, matches) {
-    const guessContainer = document.createElement("div");
-    const matchesContainer = document.createElement("div");
-    const hintBox = document.createElement("div");
-
-    guessContainer.innerText = guess;
-    matchesContainer.innerText = matches;
-
-    hintBox.append(guessContainer, matchesContainer);
-    hintBox.classList.add("hint-box");
-
-    return hintBox;
-  }
-
   #createGameOverMsg({ hasWon }) {
     const winningMessage = "Correct Guess";
     const losingMessage = "Try again";
@@ -68,21 +54,5 @@ class View {
     p.innerText = gameOverMsg;
 
     return p;
-  }
-
-  display(stats) {
-    this.#removeChildren();
-
-    const correctGuesses = stats.hints.map(({ guess, matches }) =>
-      this.#createHintBox(guess, matches)
-    );
-
-    this.#resultBox.append(...correctGuesses);
-
-    if (stats.isGameOver) {
-      const gameOverMsg = this.#createGameOverMsg(stats);
-      this.#resultBox.append(gameOverMsg);
-      return;
-    }
   }
 }
