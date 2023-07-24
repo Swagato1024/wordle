@@ -31,7 +31,7 @@ guesses
 isGameOver
 totalAttempts
 
-onGuess(word) {
+registerGuess(word) {
 this.#guesses.add(word);
 this.#guesses.isCorrectGuess() - game over
 if turns over - game over
@@ -73,7 +73,7 @@ keys = Object.keys(accb);
 result = {}
 
 for(key of keys) {
-  if(key in acc) {
-    result[key] = Math.min(acc[key], accb[key]);
-  }
+if(key in acc) {
+result[key] = Math.min(acc[key], accb[key]);
+}
 }

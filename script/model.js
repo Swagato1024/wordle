@@ -83,7 +83,7 @@ class Game {
     return this.#isGameOver;
   }
 
-  onGuess(guess) {
+  registerGuess(guess) {
     this.#guessChecker.addGuess(guess);
 
     this.#attemptsLeft--;

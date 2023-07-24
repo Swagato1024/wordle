@@ -33,7 +33,7 @@ class GameController {
       if (this.#game.isGameOver) return;
 
       const guess = new Word(userGuess);
-      this.#game.onGuess(guess);
+      this.#game.registerGuess(guess);
       const stats = this.#game.status();
 
       this.#view.display(stats);
