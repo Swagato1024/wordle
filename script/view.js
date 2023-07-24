@@ -55,11 +55,11 @@ class View {
     return hintBox;
   }
 
-  #createGameOverMsg({ win }) {
+  #createGameOverMsg({ hasWon }) {
     const winningMessage = "Correct Guess";
     const losingMessage = "Try again";
 
-    const [gameOverMsg, msgColor] = win
+    const [gameOverMsg, msgColor] = hasWon
       ? [winningMessage, "green"]
       : [losingMessage, "red"];
 

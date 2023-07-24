@@ -5,28 +5,27 @@ class Word {
     this.#word = letters;
   }
 
+  get value() {
+    return this.#word;
+  }
+
   isEqual(other) {
     return this.#word === other.#word;
   }
 
-  compare(other) {
+  countMatches(other) {
     const letters = [...this.#word];
-    const lettersInOther = [...other.#word];
-
     let matches = 0;
 
-    for (const letter of lettersInOther) {
+    [...other.#word].forEach((letter) => {
       const index = letters.indexOf(letter);
       if (index >= 0) {
         letters.splice(index, 1);
         matches++;
       }
-    }
+    });
 
-    return {
-      guess: other.#word, // not necessary
-      matches,
-    };
+    return matches;
   }
 }
 
@@ -43,13 +42,21 @@ class GuessHandler {
     this.#guesses.push(guess);
   }
 
-  isCorrectGuess() {
+  isRecentGuessCorrect() {
     const [recentGuess] = this.#guesses.slice(-1);
     return this.#secretWord.isEqual(recentGuess);
   }
 
   generateHints() {
-    return this.#guesses.map((guess) => this.#secretWord.compare(guess));
+    return this.#guesses.map((guess) => {
+      console.log(guess.value);
+
+      const matches = this.#secretWord.countMatches(guess);
+      return {
+        guess: guess.value,
+        matches,
+      };
+    });
   }
 }
 
@@ -57,13 +64,13 @@ class Game {
   #guessHandler;
   #isGameOver;
   #attemptsLeft;
-  #win;
+  #hasWon;
 
   constructor(guessChecker, attempts) {
     this.#guessHandler = guessChecker;
     this.#attemptsLeft = attempts;
     this.#isGameOver = false;
-    this.#win = false;
+    this.#hasWon = false;
   }
 
   get isGameOver() {
@@ -75,15 +82,15 @@ class Game {
 
     this.#attemptsLeft--;
 
-    if (this.#guessHandler.isCorrectGuess()) {
+    if (this.#guessHandler.isRecentGuessCorrect()) {
       this.#isGameOver = true;
-      this.#win = true;
+      this.#hasWon = true;
       return;
     }
 
     if (this.#attemptsLeft <= 0) {
       this.#isGameOver = true;
-      this.#win = false;
+      this.#hasWon = false;
     }
   }
 
@@ -91,7 +98,7 @@ class Game {
     return {
       isGameOver: this.#isGameOver,
       hints: this.#guessHandler.generateHints(),
-      win: this.#win,
+      hasWon: this.#hasWon,
       attemptsLeft: this.#attemptsLeft,
     };
   }
