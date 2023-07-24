@@ -40,19 +40,4 @@ class View {
     const words = stats.hints.map((stat) => this.#createWord(stat));
     this.#resultBox.append(...words);
   }
-
-  #createGameOverMsg({ hasWon }) {
-    const winningMessage = "Correct Guess";
-    const losingMessage = "Try again";
-
-    const [gameOverMsg, msgColor] = hasWon
-      ? [winningMessage, "green"]
-      : [losingMessage, "red"];
-
-    const p = document.createElement("p");
-    p.style.color = msgColor;
-    p.innerText = gameOverMsg;
-
-    return p;
-  }
 }

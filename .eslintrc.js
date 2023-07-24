@@ -3,6 +3,10 @@ module.exports = {
     es2021: true,
   },
 
+  parserOptions: {
+    ecmaVersion: "latest",
+  },
+
   rules: {
     "semi": ["warn", "always"],
     "quotes": ["warn", "double"],
@@ -11,7 +15,6 @@ module.exports = {
 
     "no-global-assign": "error",
     "no-cond-assign": ["warn", "always"],
-    "id-length": ["warn", { max: 10 }],
     "max-statements": ["warn", 15],
 
     "multiline-ternary": ["warn", "never"],
