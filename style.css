@@ -1,5 +1,5 @@
 :root {
-  --guess-box-border-color: black;
+  --guess-box-border-color: gray;
   --letter-present-bg-color: #c9b458;
   --letter-color: whitesmoke;
   --correct-guess-bg-color: #6aaa64;
@@ -10,6 +10,7 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
+  border: 1px solid black;
 }
 
 body {
@@ -24,8 +25,15 @@ body {
 }
 
 #game-heading {
+  width: 85%;
   margin: 1em auto;
   text-align: center;
+  border-bottom: 1px solid rgb(164, 157, 157);
+
+  background: linear-gradient(45deg, yellow, red, black);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 #guess-letters {
@@ -40,15 +48,33 @@ body {
   margin: 0 auto;
 }
 
+::placeholder {
+  color: rgb(195, 188, 188);
+}
+
 #guess-box {
   border: none;
   outline: none;
 
-  font-size: 1em;
+  width: 60%;
+  font-size: 0.9em;
   height: 2em;
-  border-bottom: 1px solid var(--guess-box-border-color);
 
   padding: 0.2em;
+  padding-left: 0.4em;
+  box-shadow: 2px 2px 2px rgb(190, 181, 181);
+}
+
+#guess-box:focus {
+  border: none;
+
+  box-shadow: none;
+  border-bottom: 2px solid rgb(208, 202, 202);
+}
+
+#guess-box:focus::placeholder {
+  transition-duration: 400ms;
+  transform: scale(0.9);
 }
 
 #submit-btn {

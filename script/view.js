@@ -9,6 +9,17 @@ class View {
     this.#previousRecord = previousRecord;
   }
 
+  displayPreviousRecord(record) {
+    const { score, secretWord } = record;
+    this.#previousRecord.innerText = `last ans: ${secretWord}  score: ${score}`;
+  }
+
+  #removeChildren() {
+    Array.from(this.#resultBox.children).forEach((child) =>
+      this.#resultBox.removeChild(child)
+    );
+  }
+
   #createLetter(stat) {
     const { letter, isInCorrectSpot, isInWrongSpot } = stat;
 
@@ -50,12 +61,6 @@ class View {
     return word;
   }
 
-  #removeChildren() {
-    Array.from(this.#resultBox.children).forEach((child) =>
-      this.#resultBox.removeChild(child)
-    );
-  }
-
   #createRows(stats) {
     const words = stats.hints.map((stat) => this.#createWord(stat));
     const blanks = this.#createBlanks(stats.attemptsLeft);
@@ -78,7 +83,7 @@ class View {
   #createGameOverMsg({ hasWon, secretWord }) {
     localStorage.setItem("secret-word", secretWord);
 
-    const msg = hasWon ? "Congratulation!!" : `secret word: ${secretWord}`;
+    const msg = hasWon ? "Congratulations!!" : `secret word: ${secretWord}`;
     const div = document.createElement("div");
     div.innerText = msg;
 
@@ -92,10 +97,5 @@ class View {
     scoreElement.innerText = `Your Score: ${gameStat.score}`;
 
     this.#gameStat.append(gameOverMsg, scoreElement);
-  }
-
-  displayPreviousRecord(record) {
-    const { score, secretWord } = record;
-    this.#previousRecord.innerText = `last game ans: ${secretWord} \n score: ${score}`;
   }
 }
