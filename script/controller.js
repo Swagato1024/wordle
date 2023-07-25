@@ -1,10 +1,8 @@
 class InputController {
   #guessBox;
-  #submitBtn;
 
-  constructor(guessBox, submitBtn) {
+  constructor(guessBox) {
     this.#guessBox = guessBox;
-    this.#submitBtn = submitBtn;
   }
 
   onSubmit(verifyGuess) {

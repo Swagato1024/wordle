@@ -14,10 +14,9 @@ const pickRandomWord = () => {
 };
 
 const createInputController = () => {
-  const submitBtn = document.querySelector("#submit-btn");
   const guessBox = document.querySelector("#guess-box");
 
-  return new InputController(guessBox, submitBtn);
+  return new InputController(guessBox);
 };
 
 const createView = () => {
