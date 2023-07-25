@@ -8,13 +8,15 @@ class InputController {
   }
 
   onSubmit(verifyGuess) {
-    this.#submitBtn.onclick = () => {
+    this.#guessBox.addEventListener("keydown", (event) => {
+      if (!(event.key === "Enter")) return;
+
       const userGuess = this.#guessBox.value;
       this.#guessBox.value = "";
       this.#guessBox.focus();
 
       verifyGuess(userGuess);
-    };
+    });
   }
 }
 

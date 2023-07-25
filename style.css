@@ -1,3 +1,11 @@
+:root {
+  --guess-box-border-color: black;
+  --letter-present-bg-color: #c9b458;
+  --letter-color: whitesmoke;
+  --correct-guess-bg-color: #6aaa64;
+  --absent-letter-bg-color: #787c7e;
+}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -33,8 +41,13 @@ body {
 }
 
 #guess-box {
-  height: 2em;
+  border: none;
+  outline: none;
+
   font-size: 1em;
+  height: 2em;
+  border-bottom: 1px solid var(--guess-box-border-color);
+
   padding: 0.2em;
 }
 
@@ -55,13 +68,12 @@ body {
   gap: 1em;
 
   margin: 1em auto;
-  /* border: 1px solid black; */
 }
 
 .letter-present {
-  background-color: #c9b458;
+  background-color: var(--letter-present-bg-color);
   font-size: 1.5em;
-  color: whitesmoke;
+  color: var(--letter-color);
 }
 
 .tile {
@@ -76,15 +88,15 @@ body {
 }
 
 .correct-guess {
-  background-color: #6aaa64;
+  background-color: var(--correct-guess-bg-color);
   font-size: 1.5em;
-  color: whitesmoke;
+  color: var(--letter-color);
 }
 
 .absent {
-  background-color: #787c7e;
+  background-color: var(--absent-letter-bg-color);
   font-size: 1.5em;
-  color: whitesmoke;
+  color: var(--letter-color);
 }
 
 .row {
