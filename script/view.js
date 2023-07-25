@@ -1,10 +1,12 @@
 class View {
   #resultBox;
   #gameStat;
+  #previousRecord;
 
-  constructor(resultBox, gameStat) {
+  constructor(resultBox, gameStat, previousRecord) {
     this.#resultBox = resultBox;
     this.#gameStat = gameStat;
+    this.#previousRecord = previousRecord;
   }
 
   #createLetter(stat) {
@@ -46,6 +48,8 @@ class View {
   }
 
   #createGameOverMsg({ hasWon, secretWord }) {
+    localStorage.setItem("secret-word", secretWord);
+
     const msg = hasWon ? "Congratulation!!" : `Secret word: ${secretWord}`;
     const div = document.createElement("div");
     div.innerText = msg;
@@ -60,5 +64,9 @@ class View {
     scoreElement.innerText = `Your Score: ${gameStat.score}`;
 
     this.#gameStat.append(gameOverMsg, scoreElement);
+  }
+
+  displayPreviousRecord(score, secretWord) {
+    this.#previousRecord.innerText = `secret word: ${secretWord} \n score: ${score}`;
   }
 }

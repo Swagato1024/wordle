@@ -21,3 +21,9 @@
     bakckGround clip of wordle
     add transition to input box
     on focus style place holder
+
+
+GameRecords
+
+will update local storage by game score, secret word
+

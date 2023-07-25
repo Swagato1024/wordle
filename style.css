@@ -112,3 +112,9 @@ body {
   flex-direction: row;
   justify-content: space-around;
 }
+
+#previous-record {
+  margin-right: 6em;
+  height: 60px;
+  text-align: right;
+}

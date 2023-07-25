@@ -30,6 +30,27 @@ class Word {
   }
 }
 
+class GameRecord {
+  constructor() {}
+
+  getPrevious() {
+    const score = localStorage.getItem("score");
+    const secretWord = localStorage.getItem("secret-word");
+
+    console.log(score);
+    console.log(secretWord);
+
+    return { score, secretWord };
+  }
+
+  update(score, secretWord) {
+    localStorage.setItem("score", score);
+    localStorage.setItem("secret-word", secretWord);
+
+    console.log("set", score, secretWord);
+  }
+}
+
 class Game {
   #secretWord;
   #guesses;
@@ -62,10 +83,6 @@ class Game {
     this.#isGameOver = this.#attemptsLeft === 0;
   }
 
-  get correctWord() {
-    return this.#secretWord.value;
-  }
-
   #hasLost() {
     return this.#attemptsLeft === 0 && !this.#hasWon;
   }
@@ -84,6 +101,7 @@ class Game {
       hints: this.#generateHints(),
       hasWon: this.#hasWon,
       attemptsLeft: this.#attemptsLeft,
+      secretWord: this.#secretWord.value,
     };
   }
 }

@@ -28,11 +28,13 @@ class GameController {
   #game;
   #inputController;
   #view;
+  #gameRecord;
 
-  constructor(game, inputController, view) {
+  constructor(game, gameRecord, inputController, view) {
     this.#game = game;
     this.#inputController = inputController;
     this.#view = view;
+    this.#gameRecord = gameRecord;
   }
 
   #onGuess(userGuess) {
@@ -45,19 +47,16 @@ class GameController {
 
   #onGameOver() {
     const score = this.#game.calculateScore();
-    const stats = this.#game.status();
-
-    const gameStat = {
-      score,
-      secretWord: this.#game.correctWord,
-      hasWon: stats.hasWon,
-    };
-
+    const { hasWon, secretWord } = this.#game.status();
+    const gameStat = { score, secretWord, hasWon };
     this.#inputController.stop();
     this.#view.displaySummary(gameStat);
+    this.#gameRecord.update(score, secretWord);
   }
 
   start() {
+    const { score, secretWord } = this.#gameRecord.getPrevious();
+    this.#view.displayPreviousRecord(score, secretWord);
     this.#inputController.onSubmit((userGuess) => {
       if (this.#game.isGameOver) return;
       this.#onGuess(userGuess);
