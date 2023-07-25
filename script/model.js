@@ -50,23 +50,16 @@ class Game {
   }
 
   registerGuess(guess) {
-    //if invalid guess return
-
     this.#guesses.push(guess);
     this.#attemptsLeft--;
 
     if (this.#secretWord.isEqual(guess)) {
-      console.log("correct guess");
-
       this.#isGameOver = true;
       this.#hasWon = true;
       return;
     }
 
-    if (this.#attemptsLeft <= 0) {
-      this.#isGameOver = true;
-      this.#hasWon = false;
-    }
+    this.#isGameOver = this.#attemptsLeft === 0;
   }
 
   get correctWord() {
