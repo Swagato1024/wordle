@@ -61,6 +61,8 @@ class GameController {
     if (previousRecord !== null)
       this.#view.displayPreviousRecord(previousRecord);
 
+    this.#view.displayBlankRows();
+
     this.#inputController.onSubmit((userGuess) => {
       if (this.#game.isGameOver) return;
       this.#onGuess(userGuess);

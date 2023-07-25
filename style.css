@@ -118,3 +118,11 @@ body {
   height: 60px;
   text-align: right;
 }
+
+.empty-tile {
+  border: 1px solid gray;
+  box-shadow: 2px 2px 2px rgb(190, 181, 181);
+
+  height: 2.2em;
+  width: 2.2em;
+}

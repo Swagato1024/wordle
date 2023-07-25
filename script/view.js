@@ -24,12 +24,29 @@ class View {
     return letterElement;
   }
 
+  #createBlankRow() {
+    const blankRow = document.createElement("div");
+
+    new Array(5).fill().forEach((_) => {
+      const blank = document.createElement("div");
+      blank.classList.add("empty-tile");
+      blankRow.append(blank);
+    });
+
+    blankRow.classList.add("row");
+    return blankRow;
+  }
+
+  #createBlanks(count) {
+    return new Array(count).fill().map((_) => this.#createBlankRow());
+  }
+
   #createWord(stats) {
     const letters = stats.map((stat) => this.#createLetter(stat));
     const word = document.createElement("div");
     word.classList.add("row");
-
     word.append(...letters);
+
     return word;
   }
 
@@ -39,18 +56,29 @@ class View {
     );
   }
 
+  #createRows(stats) {
+    const words = stats.hints.map((stat) => this.#createWord(stat));
+    const blanks = this.#createBlanks(stats.attemptsLeft);
+
+    return [...words, ...blanks];
+  }
+
+  displayBlankRows() {
+    const blanks = this.#createBlanks(6);
+    this.#resultBox.append(...blanks);
+  }
+
   render(stats) {
     this.#removeChildren();
-    const words = stats.hints.map((stat) => this.#createWord(stat));
-    this.#gameStat.innerText = `Attempts left: ${stats.attemptsLeft}`;
+    const rows = this.#createRows(stats);
 
-    this.#resultBox.append(...words);
+    this.#resultBox.append(...rows);
   }
 
   #createGameOverMsg({ hasWon, secretWord }) {
     localStorage.setItem("secret-word", secretWord);
 
-    const msg = hasWon ? "Congratulation!!" : `Secret word: ${secretWord}`;
+    const msg = hasWon ? "Congratulation!!" : `secret word: ${secretWord}`;
     const div = document.createElement("div");
     div.innerText = msg;
 
@@ -68,6 +96,6 @@ class View {
 
   displayPreviousRecord(record) {
     const { score, secretWord } = record;
-    this.#previousRecord.innerText = `secret word: ${secretWord} \n score: ${score}`;
+    this.#previousRecord.innerText = `last game ans: ${secretWord} \n score: ${score}`;
   }
 }
