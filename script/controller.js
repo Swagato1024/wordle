@@ -10,6 +10,8 @@ class InputController {
       if (!(event.key === "Enter")) return;
 
       const userGuess = this.#guessBox.value;
+      if (userGuess.length < 5) return;
+
       this.#guessBox.value = "";
       this.#guessBox.focus();
 
@@ -41,13 +43,13 @@ class GameController {
     const score = this.#game.calculateScore();
     const stats = this.#game.status();
 
-    const summary = {
+    const gameStat = {
       score,
       secretWord: this.#game.correctWord,
       hasWon: stats.hasWon,
     };
 
-    this.#view.displaySummary(summary);
+    this.#view.displaySummary(gameStat);
   }
 
   start() {

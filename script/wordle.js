@@ -21,9 +21,9 @@ const createInputController = () => {
 
 const createView = () => {
   const resultBox = document.querySelector(".result-container");
-  const summary = document.querySelector("#summary");
+  const gameStat = document.querySelector("#game-stat");
 
-  return new View(resultBox, summary);
+  return new View(resultBox, gameStat);
 };
 
 const main = () => {

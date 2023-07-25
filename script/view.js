@@ -1,10 +1,10 @@
 class View {
   #resultBox;
-  #summary;
+  #gameStat;
 
-  constructor(resultBox, summary) {
+  constructor(resultBox, gameStat) {
     this.#resultBox = resultBox;
-    this.#summary = summary;
+    this.#gameStat = gameStat;
   }
 
   #createLetter(stat) {
@@ -40,7 +40,7 @@ class View {
   render(stats) {
     this.#removeChildren();
     const words = stats.hints.map((stat) => this.#createWord(stat));
-    this.#summary.innerText = `Attempts left: ${stats.attemptsLeft}`;
+    this.#gameStat.innerText = `Attempts left: ${stats.attemptsLeft}`;
 
     this.#resultBox.append(...words);
   }
@@ -53,12 +53,12 @@ class View {
     return div;
   }
 
-  displaySummary(summary) {
-    this.#summary.innerText = "";
-    const gameOverMsg = this.#createGameOverMsg(summary);
+  displaySummary(gameStat) {
+    this.#gameStat.innerText = "";
+    const gameOverMsg = this.#createGameOverMsg(gameStat);
     const scoreElement = document.createElement("div");
-    scoreElement.innerText = `Your Score: ${summary.score}`;
+    scoreElement.innerText = `Your Score: ${gameStat.score}`;
 
-    this.#summary.append(gameOverMsg, scoreElement);
+    this.#gameStat.append(gameOverMsg, scoreElement);
   }
 }
