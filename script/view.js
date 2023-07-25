@@ -66,7 +66,8 @@ class View {
     this.#gameStat.append(gameOverMsg, scoreElement);
   }
 
-  displayPreviousRecord(score, secretWord) {
+  displayPreviousRecord(record) {
+    const { score, secretWord } = record;
     this.#previousRecord.innerText = `secret word: ${secretWord} \n score: ${score}`;
   }
 }

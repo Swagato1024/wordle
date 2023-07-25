@@ -34,20 +34,13 @@ class GameRecord {
   constructor() {}
 
   getPrevious() {
-    const score = localStorage.getItem("score");
-    const secretWord = localStorage.getItem("secret-word");
-
-    console.log(score);
-    console.log(secretWord);
-
-    return { score, secretWord };
+    return JSON.parse(localStorage.getItem("gameRecord"));
   }
 
   update(score, secretWord) {
-    localStorage.setItem("score", score);
-    localStorage.setItem("secret-word", secretWord);
+    const gameRecord = { score, secretWord };
 
-    console.log("set", score, secretWord);
+    localStorage.setItem("gameRecord", JSON.stringify(gameRecord));
   }
 }
 

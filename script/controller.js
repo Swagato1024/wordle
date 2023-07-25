@@ -49,14 +49,18 @@ class GameController {
     const score = this.#game.calculateScore();
     const { hasWon, secretWord } = this.#game.status();
     const gameStat = { score, secretWord, hasWon };
-    this.#inputController.stop();
+
     this.#view.displaySummary(gameStat);
     this.#gameRecord.update(score, secretWord);
+
+    this.#inputController.stop();
   }
 
   start() {
-    const { score, secretWord } = this.#gameRecord.getPrevious();
-    this.#view.displayPreviousRecord(score, secretWord);
+    const previousRecord = this.#gameRecord.getPrevious();
+    if (previousRecord !== null)
+      this.#view.displayPreviousRecord(previousRecord);
+
     this.#inputController.onSubmit((userGuess) => {
       if (this.#game.isGameOver) return;
       this.#onGuess(userGuess);
