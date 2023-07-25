@@ -10,6 +10,8 @@ const pickRandomWord = () => {
   ];
 
   const randomIndex = Math.floor(Math.random() * commonWords.length);
+  console.log(commonWords[randomIndex]);
+
   return new Word(commonWords[randomIndex]);
 };
 
@@ -28,8 +30,8 @@ const createView = () => {
 
 const main = () => {
   const secretWord = pickRandomWord();
-  const guesses = new Guesses(secretWord);
-  const game = new Game(guesses, 6);
+
+  const game = new Game(secretWord, 6);
   const view = createView();
 
   const inputController = createInputController();

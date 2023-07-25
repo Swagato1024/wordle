@@ -18,6 +18,10 @@ class InputController {
       verifyGuess(userGuess);
     });
   }
+
+  stop() {
+    //hide guess box
+  }
 }
 
 class GameController {
@@ -49,6 +53,7 @@ class GameController {
       hasWon: stats.hasWon,
     };
 
+    this.#inputController.stop();
     this.#view.displaySummary(gameStat);
   }
 

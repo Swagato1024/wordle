@@ -15,3 +15,9 @@
     "shift",
     "abuse"
     ]
+
+
+    styling
+    bakckGround clip of wordle
+    add transition to input box
+    on focus style place holder

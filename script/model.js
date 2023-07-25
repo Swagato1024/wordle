@@ -30,41 +30,16 @@ class Word {
   }
 }
 
-class Guesses {
-  #guesses;
-  #secretWord;
-
-  constructor(secretWord) {
-    this.#guesses = [];
-    this.#secretWord = secretWord;
-  }
-
-  addGuess(guess) {
-    this.#guesses.push(guess);
-  }
-
-  isRecentGuessCorrect() {
-    const [recentGuess] = this.#guesses.slice(-1);
-    return this.#secretWord.isEqual(recentGuess);
-  }
-
-  generateHints() {
-    return this.#guesses.map((guess) => this.#secretWord.compare(guess));
-  }
-
-  get secretWord() {
-    return this.#secretWord.value;
-  }
-}
-
 class Game {
+  #secretWord;
   #guesses;
   #isGameOver;
   #attemptsLeft;
   #hasWon;
 
-  constructor(guessChecker, attempts) {
-    this.#guesses = guessChecker;
+  constructor(secretWord, attempts) {
+    this.#secretWord = secretWord;
+    this.#guesses = [];
     this.#attemptsLeft = attempts;
     this.#isGameOver = false;
     this.#hasWon = false;
@@ -75,11 +50,12 @@ class Game {
   }
 
   registerGuess(guess) {
-    this.#guesses.addGuess(guess);
+    //if invalid guess return
 
+    this.#guesses.push(guess);
     this.#attemptsLeft--;
 
-    if (this.#guesses.isRecentGuessCorrect()) {
+    if (this.#secretWord.isEqual(guess)) {
       console.log("correct guess");
 
       this.#isGameOver = true;
@@ -94,7 +70,7 @@ class Game {
   }
 
   get correctWord() {
-    return this.#guesses.secretWord;
+    return this.#secretWord.value;
   }
 
   #hasLost() {
@@ -105,10 +81,14 @@ class Game {
     return this.#hasLost() ? 0 : (this.#attemptsLeft + 1) * 10;
   }
 
+  #generateHints() {
+    return this.#guesses.map((guess) => this.#secretWord.compare(guess));
+  }
+
   status() {
     return {
       isGameOver: this.#isGameOver,
-      hints: this.#guesses.generateHints(),
+      hints: this.#generateHints(),
       hasWon: this.#hasWon,
       attemptsLeft: this.#attemptsLeft,
     };
